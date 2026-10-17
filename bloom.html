@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7a3f50">
+<meta name="description" content="The Bridal Bloom — bridal beauty, hair, makeup and grooming services for your most beautiful moments.">
+<title>The Bridal Bloom | Beauty, Grace & Glamour</title>
+<style>
+:root{--wine:#713b4d;--rose:#c58c95;--blush:#f8eeed;--cream:#fffaf5;--ink:#30242a;--gold:#b68b50;--muted:#776a6d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6}
+a{color:inherit;text-decoration:none}.wrap{width:min(1140px,91%);margin:auto}
+header{position:sticky;top:0;z-index:10;background:rgba(255,250,245,.96);backdrop-filter:blur(10px);border-bottom:1px solid #eadbd7}
+.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-family:Georgia,serif;font-size:1.55rem;color:var(--wine);font-weight:bold;letter-spacing:.3px}.brand span{display:block;font: .63rem Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center}
+nav{display:flex;align-items:center;gap:25px;font-size:.92rem}nav a:hover{color:var(--rose)}
+.btn{display:inline-flex;justify-content:center;align-items:center;background:var(--wine);color:#fff;padding:13px 22px;border-radius:3px;font-weight:bold;border:1px solid var(--wine);transition:.2s;cursor:pointer}
+.btn:hover{background:#542a39;transform:translateY(-1px)}.btn-outline{background:transparent;color:var(--wine)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(110deg,#f8e9e6 0%,#f8e9e6 48%,#ead0cc 100%);min-height:590px;display:flex;align-items:center}
+.hero:after{content:"";position:absolute;right:-70px;top:-100px;width:560px;height:700px;border-radius:50%;border:1px solid rgba(113,59,77,.17);transform:rotate(25deg)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 0;position:relative;z-index:1}
+.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:.75rem;color:var(--gold);font-weight:bold}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:500;line-height:1.15}h1{font-size:clamp(3rem,6vw,5.4rem);margin:15px 0 20px;color:var(--wine)}h1 em{font-weight:400;color:var(--gold)}
+.hero p{font-size:1.08rem;color:#66545a;max-width:490px;margin-bottom:28px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-art{height:430px;position:relative;display:flex;align-items:center;justify-content:center}
+.portrait{width:min(360px,90%);height:405px;border-radius:180px 180px 12px 12px;background:linear-gradient(145deg,#d7a9a3,#f3d8cf 45%,#b56d78);position:relative;overflow:hidden;box-shadow:0 24px 55px #74425222}
+.portrait:before{content:"";position:absolute;width:180px;height:230px;border-radius:48% 48% 42% 42%;background:linear-gradient(90deg,#9b5e49,#c78d70 55%,#8c5142);top:73px;left:calc(50% - 90px);box-shadow:0 -35px 0 18px #39252a}
+.portrait:after{content:"";position:absolute;width:230px;height:170px;border-radius:50% 50% 0 0;background:#fff8f0;bottom:-45px;left:calc(50% - 115px);border-top:10px solid #e8c7c1}
+.flower{position:absolute;font-size:4.2rem;color:#fff4ef;text-shadow:0 3px 15px #8c4e5a55}.flower.one{top:30px;right:12px}.flower.two{bottom:24px;left:0;font-size:3rem}
+.float-card{position:absolute;bottom:35px;left:-5px;background:#fffaf5;padding:16px 20px;box-shadow:0 12px 35px #4c263015;font-family:Georgia,serif;color:var(--wine);font-size:1.1rem}
+section{padding:85px 0}.section-head{text-align:center;max-width:650px;margin:0 auto 42px}.section-head h2{font-size:clamp(2.2rem,4vw,3.3rem);color:var(--wine);margin:10px 0 14px}.section-head p{color:var(--muted);margin:0}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.service{background:#fff;border:1px solid #efe2df;padding:30px 26px;min-height:245px;transition:.25s}.service:hover{transform:translateY(-5px);box-shadow:0 18px 35px #542a3910}.icon{font-size:1.8rem;color:var(--gold)}.service h3{font-size:1.55rem;color:var(--wine);margin:15px 0 10px}.service p{color:var(--muted);font-size:.95rem;margin:0}
+.about{background:var(--blush)}.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}.about-art{min-height:390px;background:linear-gradient(150deg,#d8b0aa,#f3dfd7);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.about-art:before{content:"";width:220px;height:280px;border:1px solid #fff8f0aa;border-radius:48% 48% 8px 8px;position:absolute;transform:rotate(-8deg)}.about-art strong{font-family:Georgia,serif;font-size:2.4rem;color:#fffaf5;text-align:center;line-height:1.15;z-index:1;text-shadow:0 2px 12px #6b354055}.about-copy h2{font-size:clamp(2.3rem,4vw,3.4rem);color:var(--wine);margin:12px 0 20px}.about-copy p{color:var(--muted)}
+.features{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0}.features span{font-size:.9rem;color:var(--wine);background:#fff;padding:9px 13px;border:1px solid #eadbd7}
+.booking{background:var(--wine);color:white;text-align:center}.booking h2{font-size:clamp(2.4rem,5vw,3.8rem);margin:12px 0}.booking p{color:#f0dfe2;max-width:600px;margin:0 auto 25px}.booking .eyebrow{color:#e9c99a}.booking .btn{background:var(--cream);color:var(--wine);border-color:var(--cream)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px}.contact h2{font-size:2.7rem;color:var(--wine);margin:10px 0 18px}.contact p{color:var(--muted)}.contact-card{background:#fff;padding:28px;border:1px solid #efe2df}.contact-card label{display:block;font-size:.88rem;color:var(--wine);margin:12px 0 5px}.contact-card input,.contact-card select,.contact-card textarea{width:100%;padding:12px;border:1px solid #dfceca;background:#fffdfa;font:inherit;border-radius:2px}.contact-card textarea{min-height:95px;resize:vertical}.contact-card button{margin-top:16px;width:100%}.small{font-size:.82rem;color:var(--muted)}
+footer{background:#30242a;color:#f8eeed;padding:30px 0}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.footer-brand{font-family:Georgia,serif;font-size:1.4rem}.footer-note{font-size:.85rem;color:#d8c5c8}
+@media(max-width:760px){nav{gap:12px;font-size:.82rem}nav a:not(.btn){display:none}.nav{min-height:68px}.brand{font-size:1.3rem}.hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}.hero{min-height:auto}.hero-grid{padding:55px 0 35px;gap:10px}.hero-art{height:350px}.portrait{height:320px;width:270px}.portrait:before{top:50px}.services{grid-template-columns:1fr}.about-grid{gap:30px}.about-art{min-height:300px}section{padding:62px 0}.float-card{left:0;bottom:20px}.hero:after{right:-300px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#home">The Bridal Bloom<span>Beauty • Grace • Glamour</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#services">Services</a><a href="#about">Our Story</a><a href="#contact">Contact</a>
+      <a class="btn" href="#contact">Book a Visit</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero" id="home">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Your beauty, beautifully celebrated</div>
+        <h1>Every look tells<br>a <em>love story.</em></h1>
+        <p>From your bridal glow to your everyday refresh, discover thoughtful beauty and grooming services designed to help you feel your very best.</p>
+        <div class="hero-actions"><a class="btn" href="#contact">Book Your Appointment</a><a class="btn btn-outline" href="#services">Explore Services</a></div>
+      </div>
+      <div class="hero-art" aria-label="Elegant blush and rose salon-inspired artwork">
+        <div class="portrait"></div><div class="flower one">✿</div><div class="flower two">✿</div>
+        <div class="float-card">A little luxury, just for you ✧</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">A little something for everyone</div><h2>Beauty that feels like you</h2><p>Choose your moment. We’ll help you get ready with care, attention and a personal touch.</p></div>
+      <div class="services">
+        <article class="service"><div class="icon">✧</div><h3>Bridal Studio</h3><p>Bridal makeup, hair styling and special-event looks planned around your outfit, occasion and personal style.</p></article>
+        <article class="service"><div class="icon">❀</div><h3>Hair & Makeup</h3><p>Fresh cuts, styling, blow-dries and makeup for celebrations, evenings out or a little everyday confidence.</p></article>
+        <article class="service"><div class="icon">✦</div><h3>Skin & Self-Care</h3><p>Relaxing facial and beauty-care options to make time for yourself and leave feeling refreshed.</p></article>
+        <article class="service"><div class="icon">◇</div><h3>Women's Salon</h3><p>Personal grooming and beauty services in a welcoming, comfortable salon environment.</p></article>
+        <article class="service"><div class="icon">✂</div><h3>Men's Grooming</h3><p>Neat haircuts, beard grooming and occasion-ready finishing for a polished look.</p></article>
+        <article class="service"><div class="icon">♡</div><h3>Event Packages</h3><p>Custom beauty packages for engagements, weddings, family celebrations and other special days.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-art"><strong>Bloom into<br>your best self.</strong></div>
+      <div class="about-copy"><div class="eyebrow">Welcome to The Bridal Bloom</div><h2>Feel cared for.<br>Leave glowing.</h2><p>We believe beauty is personal. The Bridal Bloom is imagined as a warm, elegant space where every guest can relax, feel listened to and enjoy a look that suits them.</p><p>Whether you're preparing for your wedding or simply taking a moment for yourself, our goal is to make your visit feel special from start to finish.</p><div class="features"><span>♡ Personal attention</span><span>✧ Occasion-ready looks</span><span>◇ Welcoming atmosphere</span></div><a class="btn" href="#contact">Let's Plan Your Look</a></div>
+    </div>
+  </section>
+
+  <section class="booking">
+    <div class="wrap"><div class="eyebrow">Your special moment starts here</div><h2>Ready to bloom?</h2><p>Tell us what you're planning and the service you're interested in. We’ll help you take the next step toward your look.</p><a class="btn" href="#contact">Request an Appointment</a></div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div><div class="eyebrow">Get in touch</div><h2>Let's make it beautiful.</h2><p>Have a wedding date coming up or want to ask about our salon services? Send us your details and we can follow up.</p><p><strong>Location:</strong> Islamabad / Rawalpindi <span class="small">(update with your exact address)</span></p><p><strong>Phone / WhatsApp:</strong> Add your business number</p><p><strong>Opening hours:</strong> Add your confirmed salon timings</p></div>
+      <form class="contact-card" id="bookingForm">
+        <h3 style="color:var(--wine);font-size:1.6rem;margin:0">Appointment request</h3>
+        <p class="small">Fill in the details to prepare a booking message.</p>
+        <label for="name">Your name</label><input id="name" name="name" placeholder="Enter your name" required>
+        <label for="phone">Phone number</label><input id="phone" name="phone" type="tel" placeholder="Your contact number" required>
+        <label for="service">Service of interest</label><select id="service" name="service" required><option value="">Choose a service</option><option>Bridal makeup</option><option>Hair & makeup</option><option>Skin & self-care</option><option>Women's salon</option><option>Men's grooming</option><option>Event package</option></select>
+        <label for="date">Preferred date</label><input id="date" name="date" type="date">
+        <label for="message">Anything we should know?</label><textarea id="message" name="message" placeholder="Wedding date, event details, or questions"></textarea>
+        <button class="btn" type="submit">Prepare Booking Message</button>
+        <p class="small" id="formNote" aria-live="polite">Demo form: it prepares a message but does not send or store your details.</p>
+      </form>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap footer-row"><div><div class="footer-brand">The Bridal Bloom</div><div class="footer-note">Beauty • Grace • Glamour</div></div><div class="footer-note">© <span id="year"></span> The Bridal Bloom. All rights reserved.</div></div></footer>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('bookingForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ const d=new FormData(this);
+ const lines=[
+  'Hello The Bridal Bloom! I would like to request an appointment.',
+  'Name: '+d.get('name'),
+  'Phone: '+d.get('phone'),
+  'Service: '+d.get('service'),
+  'Preferred date: '+(d.get('date')||'Flexible'),
+  'Details: '+(d.get('message')||'None')
+ ];
+ const message=lines.join('\n');
+ const note=document.getElementById('formNote');
+ if(navigator.clipboard && window.isSecureContext){
+  navigator.clipboard.writeText(message).then(()=>{note.textContent='Booking message copied! Add your WhatsApp number to connect this form directly.';}).catch(()=>{note.textContent=message;});
+ } else {note.textContent=message;}
+});
+</script>
+</body>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </html>
