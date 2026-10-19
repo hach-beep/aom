@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,6 @@
         input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; background: var(--cream); font-size: 1rem; }
         .btn { background: var(--wine); color: white; padding: 14px; border: none; font-size: 1rem; cursor: pointer; width: 100%; font-weight: bold; }
         .roster-item { display: flex; align-items: center; justify-content: space-between; background: var(--cream); padding: 12px; margin-bottom: 10px; border: 1px solid var(--blush); }
-        .roster-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 12px; vertical-align: middle; }
         .btn-delete { background: #d9534f; color: white; border: none; padding: 8px 12px; cursor: pointer; }
     </style>
 </head>
@@ -23,14 +22,13 @@
 <div class="admin-box">
     <h1>Salon Control Center</h1>
     
-    <!-- SECTION 1: MANAGE TEAM -->
+    <!-- SECTION 1: MANAGE TEAM (Text Only) -->
     <form id="addStaffForm">
         <h2>Add Team Member</h2>
-        <label>Full Name</label><input type="text" id="staffName" required>
-        <label>Job Title / Role</label><input type="text" id="staffRole" required>
-        <label>Short Bio</label><textarea id="staffBio" rows="3" required></textarea>
-        <label>Profile Picture</label><input type="file" id="staffImage" accept="image/*" required>
-        <button type="submit" class="btn" id="submitBtn">Upload & Add to Roster</button>
+        <label>Full Name</label><input type="text" id="staffName" required placeholder="e.g., Ayesha Khan">
+        <label>Job Title / Role</label><input type="text" id="staffRole" required placeholder="e.g., Master Bridal Stylist">
+        <label>Short Bio</label><textarea id="staffBio" rows="3" required placeholder="Describe their experience..."></textarea>
+        <button type="submit" class="btn" id="submitBtn">Add Team Member</button>
     </form>
     <h3>Live Team Roster</h3>
     <div id="adminRosterList" style="margin-bottom:50px;">Loading...</div>
@@ -39,9 +37,9 @@
     <div style="border-top: 3px solid var(--blush); padding-top: 40px;">
         <form id="addServiceForm">
             <h2>Add Menu Service</h2>
-            <label>Service Name</label><input type="text" id="serviceName" required>
-            <label>Price Display</label><input type="text" id="servicePrice" placeholder="e.g. \$150" required>
-            <label>Service Description</label><textarea id="serviceDescription" rows="3" required></textarea>
+            <label>Service Name</label><input type="text" id="serviceName" required placeholder="e.g., Luxury Hair Styling">
+            <label>Price Display</label><input type="text" id="servicePrice" placeholder="e.g., Rs. 15,000" required>
+            <label>Service Description</label><textarea id="serviceDescription" rows="3" required placeholder="Service inclusions..."></textarea>
             <button type="submit" class="btn" id="serviceBtn" style="background:var(--rose);">Publish Service</button>
         </form>
         <h3>Live Menu Management</h3>
@@ -49,12 +47,9 @@
     </div>
 </div>
 
-    <!-- Firebase Core and Product SDK Libraries -->
-    <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script>
-      // Your integrated project configurations
       const firebaseConfig = {
         apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
         authDomain: "://firebaseapp.com",
@@ -67,56 +62,40 @@
       
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
-      const storage = firebase.storage();
 
-      // TEAM LOGIC (Fixed image extraction using files[0])
+      // TEAM LOGIC (Direct Text Upload)
       const staffForm = document.getElementById('addStaffForm');
       const submitBtn = document.getElementById('submitBtn');
       
       staffForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          submitBtn.disabled = true; 
-          submitBtn.textContent = "Uploading image...";
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Saving...";
           
-          const fileInput = document.getElementById('staffImage');
-          const file = fileInput.files[0]; // FIX: Picked exact first file reference pointer from array
-          
-          if(!file) {
-              alert("Please select a profile picture first.");
-              submitBtn.disabled = false;
-              return;
-          }
-
           try {
-              const ref = storage.ref('team/' + Date.now() + '_' + file.name);
-              await ref.put(file);
-              const url = await ref.getDownloadURL();
-              
               await db.collection('team').add({
                   name: document.getElementById('staffName').value,
                   role: document.getElementById('staffRole').value,
                   bio: document.getElementById('staffBio').value,
-                  imageUrl: url, 
                   createdAt: firebase.firestore.FieldValue.serverTimestamp()
               });
-              
               staffForm.reset(); 
-              alert("Team member added successfully!");
+              alert("Team member saved successfully!");
           } catch (err) { 
               console.error(err);
-              alert("Error uploading team member data layers."); 
+              alert("Error: " + err.message); 
           } finally { 
               submitBtn.disabled = false; 
-              submitBtn.textContent = "Upload & Add to Roster"; 
+              submitBtn.textContent = "Add Team Member"; 
           }
       });
 
       db.collection('team').orderBy('createdAt', 'asc').onSnapshot(snap => {
           const list = document.getElementById('adminRosterList'); 
-          list.innerHTML = snap.empty ? '<p style="color:#777;">No team members registered yet.</p>':'';
+          list.innerHTML = snap.empty ? '<p style="color:#777;">No team members registered.</p>':'';
           snap.forEach(doc => { 
               const emp = doc.data(); 
-              list.innerHTML += `<div class="roster-item"><div class="roster-info"><img src="${emp.imageUrl || 'https://placeholder.com'}"><strong>${emp.name}</strong></div><button class="btn-delete" onclick="deleteTeam('${doc.id}')">Remove</button></div>`; 
+              list.innerHTML += `<div class="roster-item"><div class="roster-info"><strong>${emp.name}</strong> (${emp.role})</div><button class="btn-delete" onclick="deleteTeam('${doc.id}')">Remove</button></div>`; 
           });
       });
       window.deleteTeam = async id => { if(confirm("Delete team member?")) await db.collection('team').doc(id).delete(); };
@@ -138,7 +117,7 @@
               sForm.reset(); 
               alert("Service published successfully!");
           } catch(err) { 
-              alert("Error publishing service menu item."); 
+              alert("Error publishing service."); 
           } finally { 
               sBtn.disabled = false; 
               sBtn.textContent = "Publish Service"; 
