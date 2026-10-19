@@ -53,11 +53,20 @@
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script>
-      // PASTE_YOUR_FIREBASE_CONFIG_HERE
-      const firebaseConfig = { apiKey: "YOURS", authDomain: "YOURS", projectId: "YOURS", storageBucket: "YOURS", messagingSenderId: "YOURS", appId: "YOURS" };
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
-      const storage = firebase.storage();
+      
+const firebaseConfig = {
+  apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
+  authDomain: "bloom-1959f.firebaseapp.com",
+  projectId: "bloom-1959f",
+  storageBucket: "bloom-1959f.firebasestorage.app",
+  messagingSenderId: "249083863881",
+  appId: "1:249083863881:web:737f41f67f559faf61b098",
+  measurementId: "G-K1MHZ8BHSR"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
       // TEAM LOGIC
       const staffForm = document.getElementById('addStaffForm');
