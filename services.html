@@ -93,13 +93,19 @@
     <script src="https://gstatic.com"></script>
     <script>
       // Replace with your real Firebase Config Credentials configuration object
-      const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_://firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_://appspot.com",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
+const firebaseConfig = {
+  apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
+  authDomain: "bloom-1959f.firebaseapp.com",
+  projectId: "bloom-1959f",
+  storageBucket: "bloom-1959f.firebasestorage.app",
+  messagingSenderId: "249083863881",
+  appId: "1:249083863881:web:737f41f67f559faf61b098",
+  measurementId: "G-K1MHZ8BHSR"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
       };
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
