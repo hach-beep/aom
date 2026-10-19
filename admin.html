@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,51 +49,75 @@
     </div>
 </div>
 
+    <!-- Firebase Core and Product SDK Libraries -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script>
+      // Your integrated project configurations
+      const firebaseConfig = {
+        apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
+        authDomain: "://firebaseapp.com",
+        projectId: "bloom-1959f",
+        storageBucket: "bloom-1959f.firebasestorage.app",
+        messagingSenderId: "249083863881",
+        appId: "1:249083863881:web:737f41f67f559faf61b098",
+        measurementId: "G-K1MHZ8BHSR"
+      };
       
-const firebaseConfig = {
-  apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
-  authDomain: "bloom-1959f.firebaseapp.com",
-  projectId: "bloom-1959f",
-  storageBucket: "bloom-1959f.firebasestorage.app",
-  messagingSenderId: "249083863881",
-  appId: "1:249083863881:web:737f41f67f559faf61b098",
-  measurementId: "G-K1MHZ8BHSR"
-};
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const storage = firebase.storage();
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-      // TEAM LOGIC
+      // TEAM LOGIC (Fixed image extraction using files[0])
       const staffForm = document.getElementById('addStaffForm');
       const submitBtn = document.getElementById('submitBtn');
       
       staffForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          submitBtn.disabled = true; submitBtn.textContent = "Uploading image...";
-          const file = document.getElementById('staffImage').files[0];
+          submitBtn.disabled = true; 
+          submitBtn.textContent = "Uploading image...";
+          
+          const fileInput = document.getElementById('staffImage');
+          const file = fileInput.files[0]; // FIX: Picked exact first file reference pointer from array
+          
+          if(!file) {
+              alert("Please select a profile picture first.");
+              submitBtn.disabled = false;
+              return;
+          }
+
           try {
               const ref = storage.ref('team/' + Date.now() + '_' + file.name);
               await ref.put(file);
               const url = await ref.getDownloadURL();
+              
               await db.collection('team').add({
                   name: document.getElementById('staffName').value,
                   role: document.getElementById('staffRole').value,
                   bio: document.getElementById('staffBio').value,
-                  imageUrl: url, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                  imageUrl: url, 
+                  createdAt: firebase.firestore.FieldValue.serverTimestamp()
               });
-              staffForm.reset(); alert("Team member added!");
-          } catch (err) { alert("Error uploading team member"); }
-          finally { submitBtn.disabled = false; submitBtn.textContent = "Upload & Add to Roster"; }
+              
+              staffForm.reset(); 
+              alert("Team member added successfully!");
+          } catch (err) { 
+              console.error(err);
+              alert("Error uploading team member data layers."); 
+          } finally { 
+              submitBtn.disabled = false; 
+              submitBtn.textContent = "Upload & Add to Roster"; 
+          }
       });
 
       db.collection('team').orderBy('createdAt', 'asc').onSnapshot(snap => {
-          const list = document.getElementById('adminRosterList'); list.innerHTML = snap.empty ? '<p>No team.</p>':'';
-          snap.forEach(doc => { const emp = doc.data(); list.innerHTML += `<div class="roster-item"><div class="roster-info"><img src="${emp.imageUrl}"><strong>${emp.name}</strong></div><button class="btn-delete" onclick="deleteTeam('${doc.id}')">Remove</button></div>`; });
+          const list = document.getElementById('adminRosterList'); 
+          list.innerHTML = snap.empty ? '<p style="color:#777;">No team members registered yet.</p>':'';
+          snap.forEach(doc => { 
+              const emp = doc.data(); 
+              list.innerHTML += `<div class="roster-item"><div class="roster-info"><img src="${emp.imageUrl || 'https://placeholder.com'}"><strong>${emp.name}</strong></div><button class="btn-delete" onclick="deleteTeam('${doc.id}')">Remove</button></div>`; 
+          });
       });
       window.deleteTeam = async id => { if(confirm("Delete team member?")) await db.collection('team').doc(id).delete(); };
 
@@ -111,14 +135,23 @@ const analytics = getAnalytics(app);
                   description: document.getElementById('serviceDescription').value,
                   createdAt: firebase.firestore.FieldValue.serverTimestamp()
               });
-              sForm.reset(); alert("Service published!");
-          } catch(err) { alert("Error publishing service"); }
-          finally { sBtn.disabled = false; sBtn.textContent = "Publish Service"; }
+              sForm.reset(); 
+              alert("Service published successfully!");
+          } catch(err) { 
+              alert("Error publishing service menu item."); 
+          } finally { 
+              sBtn.disabled = false; 
+              sBtn.textContent = "Publish Service"; 
+          }
       });
 
       db.collection('services').orderBy('createdAt', 'asc').onSnapshot(snap => {
-          const list = document.getElementById('adminServicesList'); list.innerHTML = snap.empty ? '<p>No services.</p>':'';
-          snap.forEach(doc => { const s = doc.data(); list.innerHTML += `<div class="roster-item"><div class="roster-info"><strong>${s.name}</strong> (${s.price})</div><button class="btn-delete" onclick="deleteService('${doc.id}')">Delete</button></div>`; });
+          const list = document.getElementById('adminServicesList'); 
+          list.innerHTML = snap.empty ? '<p style="color:#777;">No services published yet.</p>':'';
+          snap.forEach(doc => { 
+              const s = doc.data(); 
+              list.innerHTML += `<div class="roster-item"><div class="roster-info"><strong>${s.name}</strong> (${s.price})</div><button class="btn-delete" onclick="deleteService('${doc.id}')">Delete</button></div>`; 
+          });
       });
       window.deleteService = async id => { if(confirm("Delete service?")) await db.collection('services').doc(id).delete(); };
     </script>
