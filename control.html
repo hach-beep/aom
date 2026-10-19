@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control Center | The Bridal Bloom</title>
+    <style>
+        :root { --wine: #713b4d; --rose: #c58c95; --blush: #f8eeed; --cream: #fffaf5; --ink: #30242a; }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: var(--cream); color: var(--ink); padding: 20px 10px; }
+        .admin-box { max-width: 600px; margin: 0 auto; background: white; border: 1px solid var(--blush); padding: 25px 15px; border-radius: 8px; }
+        h1, h2, h3 { font-family: Georgia, serif; color: var(--wine); margin-top: 0; }
+        form { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; border-bottom: 2px dashed var(--blush); padding-bottom: 30px; }
+        label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: #555; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; background: var(--cream); font-size: 1rem; }
+        .btn { background: var(--wine); color: white; padding: 14px; border: none; font-size: 1rem; cursor: pointer; width: 100%; font-weight: bold; }
+        .roster-item { display: flex; align-items: center; justify-content: space-between; background: var(--cream); padding: 12px; margin-bottom: 10px; border: 1px solid var(--blush); }
+        .roster-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 12px; vertical-align: middle; }
+        .btn-delete { background: #d9534f; color: white; border: none; padding: 8px 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="admin-box">
+    <h1>Salon Control Center</h1>
+    
+    <!-- SECTION 1: MANAGE TEAM -->
+    <form id="addStaffForm">
+        <h2>Add Team Member</h2>
+        <label>Full Name</label><input type="text" id="staffName" required>
+        <label>Job Title / Role</label><input type="text" id="staffRole" required>
+        <label>Short Bio</label><textarea id="staffBio" rows="3" required></textarea>
+        <label>Profile Picture</label><input type="file" id="staffImage" accept="image/*" required>
+        <button type="submit" class="btn" id="submitBtn">Upload & Add to Roster</button>
+    </form>
+    <h3>Live Team Roster</h3>
+    <div id="adminRosterList" style="margin-bottom:50px;">Loading...</div>
+
+    <!-- SECTION 2: MANAGE SERVICES -->
+    <div style="border-top: 3px solid var(--blush); padding-top: 40px;">
+        <form id="addServiceForm">
+            <h2>Add Menu Service</h2>
+            <label>Service Name</label><input type="text" id="serviceName" required>
+            <label>Price Display</label><input type="text" id="servicePrice" placeholder="e.g. \$150" required>
+            <label>Service Description</label><textarea id="serviceDescription" rows="3" required></textarea>
+            <button type="submit" class="btn" id="serviceBtn" style="background:var(--rose);">Publish Service</button>
+        </form>
+        <h3>Live Menu Management</h3>
+        <div id="adminServicesList">Loading...</div>
+    </div>
+</div>
+
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+    <script>
+      // PASTE_YOUR_FIREBASE_CONFIG_HERE
+      const firebaseConfig = { apiKey: "YOURS", authDomain: "YOURS", projectId: "YOURS", storageBucket: "YOURS", messagingSenderId: "YOURS", appId: "YOURS" };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      // TEAM LOGIC
+      const staffForm = document.getElementById('addStaffForm');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      staffForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          submitBtn.disabled = true; submitBtn.textContent = "Uploading image...";
+          const file = document.getElementById('staffImage').files[0];
+          try {
+              const ref = storage.ref('team/' + Date.now() + '_' + file.name);
+              await ref.put(file);
+              const url = await ref.getDownloadURL();
+              await db.collection('team').add({
+                  name: document.getElementById('staffName').value,
+                  role: document.getElementById('staffRole').value,
+                  bio: document.getElementById('staffBio').value,
+                  imageUrl: url, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+              staffForm.reset(); alert("Team member added!");
+          } catch (err) { alert("Error uploading team member"); }
+          finally { submitBtn.disabled = false; submitBtn.textContent = "Upload & Add to Roster"; }
+      });
+
+      db.collection('team').orderBy('createdAt', 'asc').onSnapshot(snap => {
+          const list = document.getElementById('adminRosterList'); list.innerHTML = snap.empty ? '<p>No team.</p>':'';
+          snap.forEach(doc => { const emp = doc.data(); list.innerHTML += `<div class="roster-item"><div class="roster-info"><img src="${emp.imageUrl}"><strong>${emp.name}</strong></div><button class="btn-delete" onclick="deleteTeam('${doc.id}')">Remove</button></div>`; });
+      });
+      window.deleteTeam = async id => { if(confirm("Delete team member?")) await db.collection('team').doc(id).delete(); };
+
+      // SERVICES LOGIC
+      const sForm = document.getElementById('addServiceForm');
+      const sBtn = document.getElementById('serviceBtn');
+
+      sForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          sBtn.disabled = true;
+          try {
+              await db.collection('services').add({
+                  name: document.getElementById('serviceName').value,
+                  price: document.getElementById('servicePrice').value,
+                  description: document.getElementById('serviceDescription').value,
+                  createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+              sForm.reset(); alert("Service published!");
+          } catch(err) { alert("Error publishing service"); }
+          finally { sBtn.disabled = false; sBtn.textContent = "Publish Service"; }
+      });
+
+      db.collection('services').orderBy('createdAt', 'asc').onSnapshot(snap => {
+          const list = document.getElementById('adminServicesList'); list.innerHTML = snap.empty ? '<p>No services.</p>':'';
+          snap.forEach(doc => { const s = doc.data(); list.innerHTML += `<div class="roster-item"><div class="roster-info"><strong>${s.name}</strong> (${s.price})</div><button class="btn-delete" onclick="deleteService('${doc.id}')">Delete</button></div>`; });
+      });
+      window.deleteService = async id => { if(confirm("Delete service?")) await db.collection('services').doc(id).delete(); };
+    </script>
+</body>
+</html>
