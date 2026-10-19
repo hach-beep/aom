@@ -58,39 +58,43 @@
     </main>
     <footer><div class="wrap">&copy; The Bridal Bloom. All rights reserved.</div></footer>
 
-    <!-- Firebase App and Cloud Firestore Libraries -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
-    <script>
-      // Integrated Project Config
-      const firebaseConfig = {
-        apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
-        authDomain: "bloom-1959f.firebaseapp.com",
-        projectId: "bloom-1959f",
-        storageBucket: "bloom-1959f.firebasestorage.app",
-        messagingSenderId: "249083863881",
-        appId: "1:249083863881:web:737f41f67f559faf61b098",
-        measurementId: "G-K1MHZ8BHSR"
-      };
-      
-      // Initialize Services
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+    <!-- استبدل فقط وسم الـ <script> في أسفل صفحة team.html بهذا الكود المحدث -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
+    authDomain: "://firebaseapp.com",
+    projectId: "bloom-1959f",
+    storageBucket: "bloom-1959f.firebasestorage.app",
+    messagingSenderId: "249083863881",
+    appId: "1:249083863881:web:737f41f67f559faf61b098",
+    measurementId: "G-K1MHZ8BHSR"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-      // Listen to Database
-      db.collection('team').orderBy('createdAt', 'asc').onSnapshot((snapshot) => {
-          const container = document.getElementById('teamContainer');
-          container.innerHTML = snapshot.empty ? '<p style="grid-column:1/-1;text-align:center;color:#777;">No team members added yet.</p>' : '';
-          
-          snapshot.forEach((doc) => {
-              const emp = doc.data();
-              container.innerHTML += `
-                  <article class="team-card">
-                      <div class="avatar-container"><img class="avatar" src="${emp.imageUrl || 'https://placeholder.com'}" alt="${emp.name}"></div>
-                      <h3>${emp.name}</h3><div class="role">${emp.role}</div><p class="bio">${emp.bio}</p>
-                  </article>`;
-          });
+  db.collection('team').orderBy('createdAt', 'asc').onSnapshot((snapshot) => {
+      const container = document.getElementById('teamContainer');
+      container.innerHTML = snapshot.empty ? '<p style="grid-column:1/-1;text-align:center;color:#777;">No team members added yet.</p>' : '';
+      
+      snapshot.forEach((doc) => {
+          const emp = doc.data();
+          container.innerHTML += `
+              <article class="team-card">
+                  <!-- تم استخدام صورة رمزية افتراضية ومتناسقة مع الهوية بصيغة SVG -->
+                  <div class="avatar-container">
+                      <svg class="avatar" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org" style="background:#f8eeed; padding:20px; width:100%; height:100%; border-radius:50%; border:3px solid #f8eeed;">
+                          <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="#713b4d"/>
+                      </svg>
+                  </div>
+                  <h3>${emp.name}</h3><div class="role">${emp.role}</div><p class="bio">${emp.bio}</p>
+              </article>`;
       });
+  });
+</script>
+    
     </script>
 </body>
 </html>
