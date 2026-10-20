@@ -46,27 +46,26 @@
         <div id="adminServicesList">Loading...</div>
     </div>
 </div>
-<!-- Load Firebase App (Compat version) -->
-<script src="https://gstatic.com"></script>
-
-<!-- Load Firebase Firestore (Compat version) -->
-<script src="https://gstatic.com"></script>
     
 
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyB6d5RVyz6F3al09iqBV7ewrbR_n4rXFbo",
-        authDomain: "://firebaseapp.com",
-        projectId: "bloom-1959f",
-        storageBucket: "bloom-1959f.firebasestorage.app",
-        messagingSenderId: "249083863881",
-        appId: "1:249083863881:web:737f41f67f559faf61b098",
-        measurementId: "G-K1MHZ8BHSR"
-      };
-      
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+<!-- Load Firebase App and Firestore Compat versions -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
 
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB6d5RVyz6F3a1O9iqBV7ewrBR_n4rXFbo",
+    authDomain: "://firebaseapp.com",
+    projectId: "bloom-1959f",
+    storageBucket: "://appspot.com",
+    messagingSenderId: "249083863881",
+    appId: "1:249083863881:web:737f41f67f559faf61b098",
+    measurementId: "G-K1MHZ8BHSR"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+      
       // TEAM LOGIC (Direct Text Upload)
       const staffForm = document.getElementById('addStaffForm');
       const submitBtn = document.getElementById('submitBtn');
