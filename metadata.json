@@ -1,0 +1,6 @@
+{
+  "name": "The Bridal Bloom",
+  "description": "The Bridal Bloom — bridal beauty, hair, makeup and grooming services for your most beautiful moments with live service menu, artisan team showcase, and booking appointments.",
+  "permissions": [],
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

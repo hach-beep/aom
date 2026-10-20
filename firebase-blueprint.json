@@ -1,0 +1,145 @@
+{
+  "entities": {
+    "SalonService": {
+      "title": "SalonService",
+      "description": "Salon services available on the menu with prices, descriptions, and categories.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "price": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["name", "price", "description"]
+    },
+    "TeamMember": {
+      "title": "TeamMember",
+      "description": "Artisan staff roster with names, job titles, and experience descriptions.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "bio": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["name", "role", "bio"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Client appointment reservations and worker manual bookings.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "service": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "date": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "time": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "assignedStaff": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Pending", "Confirmed", "Completed", "Cancelled"]
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "bookedBy": {
+          "type": "string",
+          "enum": ["customer", "staff"]
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["name", "phone", "service"]
+    }
+  },
+  "firestore": {
+    "/services/{serviceId}": {
+      "schema": "SalonService",
+      "description": "Public catalog of salon services, prices, categories, and descriptions."
+    },
+    "/team/{memberId}": {
+      "schema": "TeamMember",
+      "description": "Artisan staff roster with names, roles, and bios."
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Live client bookings and staff manual entries with statuses and details."
+    }
+  }
+}
